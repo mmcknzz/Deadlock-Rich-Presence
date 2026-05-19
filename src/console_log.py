@@ -263,6 +263,12 @@ class LogWatcher:
         # Clear hideout hero and reopen the window so the first in-match
         # signal is accepted (hero selection can change it, Street Brawl
         # assigns randomly).
+        already_in_match_with_hero = (
+            self.state.phase in (GamePhase.IN_MATCH, GamePhase.MATCH_INTRO)
+            and self.state.hero_key is not None
+        )
+        if already_in_match_with_hero:
+            return
         self.state.hero_key = None
         self.state.is_transformed = False
         self._hero_window_open = True
